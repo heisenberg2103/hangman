@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <map>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -27,6 +29,28 @@ string fml(string s)
 			dummy += "_";
 		}
 	}
+
+	return dummy;
+}
+
+string gpl(string s, char l, string dummy)
+{
+	string::iterator it = dummy.begin();
+	bool flag = false;
+
+	
+	for (string::iterator i = s.begin(); i != s.end(); i++, it++) {
+		if (*i == l) {
+			replace(it, it + 1, '_', l);
+			flag = true;
+		} 
+	}
+
+	if (flag == false) {
+		dummy = "";
+	}
+
+	return dummy;
 }
 
 int main()
@@ -35,6 +59,7 @@ int main()
 	string movies[] = {"jurassic park", "saving private ryan", "the lord of the rings", "star wars", 
 					   "harry potter", "mad max", "minority report", "the godfather", "fight club", "the shawshank redemption"};
 	map<char, bool> m;
+	int ctr = 0;
 
 	m = initAlphabet();
 
@@ -50,6 +75,16 @@ int main()
 	for (int i = 0; i < 26; i++) {
 		cout << dummy << endl;
 		
+		if (dummy.find('_') == string::npos) {
+			cout << "YOU WIN!!!" << endl;
+			break;
+		}
+
+		if (ctr >= 7) {
+			cout << "YOU SUCK!!!" << endl;
+			break;
+		}
+
 		char l;
 
 		for (;;) {
@@ -58,16 +93,29 @@ int main()
 
 			if (l >= 'a' && l <= 'z') {
 				if (m[l] == true) {
+					cout << "LETTER ALREADY USED!!!" << endl;
 					continue;
 				} else {
 					m[l] = true;
-
+					string tmp = gpl(curr, l, dummy); 
+					
+					if (tmp == "") {
+						ctr++;
+						cout << "WRONG LETTER!!!" << endl;
+					} else {
+						dummy = tmp;
+					}
+					
+					break;
 				}
 			} else {
+				cout << "SPECIAL CHARACTERS NOT ALLOWED!!!" << endl;
 				continue;
 			}
 		}
 	}
+
+	cout << endl << "GGWP" << endl;
 
 	return 0;
 }
