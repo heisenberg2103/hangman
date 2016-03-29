@@ -16,6 +16,19 @@ map<char, bool> initAlphabet()
 	return m;
 }
 
+string fml(string s)
+{
+	string dummy;
+
+	for (string::iterator i = s.begin(); i != s.end(); i++) {
+		if (*i == ' ') {
+			dummy += " ";
+		} else {
+			dummy += "_";
+		}
+	}
+}
+
 int main()
 {
 	string user;
@@ -28,17 +41,32 @@ int main()
 	cout << "Enter username : ";
 	getline(cin, user);
 
-	cout << "READY PLAYER ZERO!!!" << endl;
+	cout << "READY PLAYER ONE!!!" << endl;
 
 	srand(time(NULL));
 	string curr = movies[rand() % 10];
+	string dummy = fml(curr);
 
-	//for (vector<pair<char, bool> >::iterator i = v.begin(); i != v.end(); i++) {
-	//	cout << (*i).first << " " << (*i).second << endl;
-	//}
+	for (int i = 0; i < 26; i++) {
+		cout << dummy << endl;
+		
+		char l;
 
-	for (int i = 1; i <= 7; i++) {
-		cout << m['a'];
+		for (;;) {
+			cout << "Enter a letter : ";
+			cin >> l;
+
+			if (l >= 'a' && l <= 'z') {
+				if (m[l] == true) {
+					continue;
+				} else {
+					m[l] = true;
+
+				}
+			} else {
+				continue;
+			}
+		}
 	}
 
 	return 0;
